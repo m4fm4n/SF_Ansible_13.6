@@ -1,0 +1,23 @@
+---
+# tasks file for users
+
+- name: Create group
+  group:
+    name: superusers
+    state: present
+
+- name: Allow group to have sudo
+  lineinfile:
+    dest: /etc/sudoers
+    state: present
+    regexp: '^%superusers'
+    line: '%superusers ALL=(ALL)  ALL'
+    validate: /usr/sbin/visudo -cf %s
+
+- name: Create SSH key for user1 in ~sshans/.ssh/id_rsa
+  user:
+    name: sshans
+    group: superusers
+    generate_ssh_key: yes
+    ssh_key_bits: 2048
+    ssh_key_file: .ssh/id_rsa
