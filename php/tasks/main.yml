@@ -1,0 +1,32 @@
+---
+# tasks file for php
+- name: apt update
+  yum:
+    update_cache: yes
+
+- name: Install php-fpm
+  yum:
+    name: php-fpm
+
+- name: Remove /etc/php-fpm.d/www.conf
+  file:
+    path: /etc/php-fpm.d/www.conf
+    state: absent
+
+- name: Add new /etc/php-fpm.d/www.conf
+  copy:
+    src: /etc/ansible/roles/php/files/www.conf
+    dest: /etc/php-fpm.d/www.conf
+
+- name: Open 9000 port      
+  firewalld:
+    port: 9000/tcp
+    permanent: yes
+    state: enabled
+
+- name: Enable service php-fpm
+  service:
+    name: php-fpm
+    enabled: yes
+    state: started
+  notify: restart_php
