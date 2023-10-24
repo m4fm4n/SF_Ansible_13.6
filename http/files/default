@@ -20,7 +20,7 @@
 #
 
 upstream php-fpm-backend {
-        server 192.168.20.148:9000;
+        server {{CentOS_IP}}:9000;
 
 }
 
