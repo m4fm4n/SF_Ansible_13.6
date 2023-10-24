@@ -1,5 +1,5 @@
 ---
-- hosts: all
+- hosts: OSall
   remote_user: root
   roles:
     - users
