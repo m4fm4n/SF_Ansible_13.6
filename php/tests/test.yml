@@ -1,5 +1,5 @@
 ---
-- hosts: localhost
+- hosts: php
   remote_user: root
   roles:
     - php
